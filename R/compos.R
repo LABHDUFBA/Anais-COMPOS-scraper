@@ -1,6 +1,8 @@
-###########################################
-###  LABHDUFBA - Leonardo e Tarssio  ######
-##########################################
+#########################################################################
+###  Projeto de script para web scraping da pagina de Anais da COMPÓS ###
+###                               LABHDUFBA                           ### 
+###                Leonardo Nascimento e Tarssio Barreto              ###    
+#########################################################################
 library(RSelenium)
 library(tidyverse)
 library(rvest)
@@ -48,17 +50,17 @@ for (i in 1:21){
   for(j in 1:length(webElem)){
     clica(webElem[[j]])
     html <- remote_driver$getPageSource()[[1]]
-    ## Nomes do GTs
+    ## peha os nomes do GTs
     nome_gt <- html %>% 
       read_html() %>% 
       html_nodes(xpath = "//*[@id='divResultado1']/div/h1") %>% 
       html_text
-    ## Título
+    ## pega os títulos
     titulo <- html %>% 
       read_html() %>% 
       html_nodes(xpath =  "//label/a") %>% 
       html_text
-   ## Autores
+   ## pega os autores
     autores <- html %>% 
       read_html() %>% 
       html_nodes(xpath =  "//p[2]/text()") %>% 
@@ -91,7 +93,7 @@ titulo <- df$titulo
 titulo <- gsub("\\:|\\?|\\/|*|ñ|\\(|\\)|\"|'", "", titulo)
 
 
-### Com problemas...
+### Renomenando em massa
 oldNames<-list.files(".") #some argument here
 newNames <- titulo
 for (i in 1:length(oldNames))file.rename(oldNames[i],newNames[i])
