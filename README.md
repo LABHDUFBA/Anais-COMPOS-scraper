@@ -3,7 +3,7 @@
 
 # Script Anais-COMPÓS
 
-*Projeto de script para web scraping da página de [Anais da - Associação Nacional dos Programas de Pós-Graduação em Comunicação - COMPÓS](https://www.compos.org.br/anais.php) desenvolvido pelo [Laboratório de Humanidades Digitais da Ufba](http://labhd.ufba.br/).*
+*Projeto de script para web scraping da página de [Anais da Associação Nacional dos Programas de Pós-Graduação em Comunicação - COMPÓS](https://www.compos.org.br/anais.php) desenvolvido pelo [Laboratório de Humanidades Digitais da UFBA](http://labhd.ufba.br/).*
 
 *O Script Anais-COMPÓS realiza a raspagem dos papers em pdf de toda a Biblioteca com os Anais dos Encontros entre 2000 até 2020 (disponíveis atualmente na site).*
 ___
@@ -21,7 +21,7 @@ ___
 
 ## Índice
 
-- [Script Anais-ComPos](#script-anais-compos)
+- [Script Anais-COMPÓS](#script-anais-compos)
   - [Índice](#índice)
   - [Instalação](#instalação)
     - [R e RStudio](#ReRSTUDIO)
