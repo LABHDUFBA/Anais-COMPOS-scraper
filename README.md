@@ -3,11 +3,6 @@
 
 # Script Anais-COMPÓS
 
-<style>
-body {
-text-align: justify}
-</style> 
-
 *Projeto de script para web scraping da página de [Anais da Associação Nacional dos Programas de Pós-Graduação em Comunicação - COMPÓS](https://www.compos.org.br/anais.php) desenvolvido pelo [Laboratório de Humanidades Digitais da UFBA](http://labhd.ufba.br/).*
 
 *O Script Anais-COMPÓS realiza a raspagem dos papers em pdf de toda a Biblioteca com os Anais dos Encontros entre 2000 até 2020 (disponíveis atualmente na site). Além disso, ele gera um base de dados com: edição COMPÓS, nome dos autores, título e link para o pdf.*
@@ -19,11 +14,6 @@ ___
 
 </center>
 ___
-
-<style>
-body {
-text-align: justify}
-</style>
 
 Esse script foi pensado como uma ferramenta metodológica da pesquisa em humanidades digitais. Sua criação é fruto das reflexões e experiências empíricas de pesquisadores de diversas áreas das humanidades que têm enfrentado o [desafio de fazer ciências humanas no mundo digital](http://bibliotecadigital.fgv.br/ojs/index.php/reh/article/view/79933)
 
@@ -65,7 +55,7 @@ Além disso, para ter um ambiente completo de desenvolvimento no R, recomendamos
 
 – RTools (para Windows: [https://cran.r-project.org/bin/windows/Rtools/](https://cran.r-project.org/bin/windows/Rtools/) ou Xcode com command line tools (para Mac na AppStore do Mac), para criar pacotes, usar C++ com R entre outras  coisas
 
-Após a instalação, vc pode executar o arquivo .py direto do prompt de comando do Windows ou pelo terminal do Linux, ou utilizar as diversas [IDE](https://pt.wikipedia.org/wiki/Ambiente_de_desenvolvimento_integrado) disponíveis.
+Após a instalação, vc pode executar o arquivo **compos.R** que está na pasta **R** direto do RStudio.
 
 Exemplo de como executar utilizando o terminal do Linux, após instalar o Python3.8:
 
