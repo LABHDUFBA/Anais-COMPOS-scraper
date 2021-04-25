@@ -7,9 +7,15 @@
 library(RSelenium)
 library(tidyverse)
 library(rvest)
-####### Craindo um Webdriver Rselenium
-driver <- rsDriver(browser = c("chrome"), port = 4446L)
+
+####### Criando um Webdriver Rselenium
+driver <- rsDriver(browser = c("chrome"), chromever="90.0.4430.24", port = 4447L)
 remote_driver <- driver[["client"]]
+
+#### Caso dê erro de porta já em uso execute a linha abaixo
+#### ( retirando o "#" da linha)
+#system("taskkill /im java.exe /f", intern=FALSE, ignore.stdout=FALSE)
+
 ## Acessando o site da Compos
 remote_driver$navigate("https://www.compos.org.br/anais_encontros.php")
 ########################
@@ -19,10 +25,11 @@ links_enc <- html %>%
   read_html() %>% 
   html_nodes(xpath = "//label/a") %>% 
   html_attr("href")
-encontros <- html %>% 
+nome_encontros <- html %>% 
   read_html() %>% 
   html_nodes(xpath = "//label/a") %>% 
   html_text()
+
 ### Colando o endereço básico do site ("https://www.compos.org.br/") 
 ### da COMPÓS nos links dos encontros
 links_enc <- paste0("https://www.compos.org.br/", links_enc, "")
@@ -39,10 +46,11 @@ clica <- function(element){element$clickElement();  Sys.sleep(2);}
 for (i in 1:21){
   print(links_gts[i])
   url <- links_gts[i]
-  Sys.sleep(1)
   remote_driver$navigate(url)
+  Sys.sleep(1)
   html1 <- remote_driver$getPageSource()[[1]]
-  ### pega o nome dos encontros
+  Sys.sleep(1)
+  ### encontros
   encontros <- html1 %>% 
     read_html() %>% 
     html_nodes(xpath = "//*[@id='divResultado1']/div/h2/text()") %>% 
@@ -52,26 +60,26 @@ for (i in 1:21){
   for(j in 1:length(webElem)){
     clica(webElem[[j]])
     html <- remote_driver$getPageSource()[[1]]
-    ## peha os nomes do GTs
+    ## Nomes do GTs
     nome_gt <- html %>% 
       read_html() %>% 
       html_nodes(xpath = "//*[@id='divResultado1']/div/h1") %>% 
       html_text
-    ## pega os títulos
+    ## Título
     titulo <- html %>% 
       read_html() %>% 
       html_nodes(xpath =  "//label/a") %>% 
       html_text
-   ## pega os autores
+    ## Autores
     autores <- html %>% 
       read_html() %>% 
       html_nodes(xpath =  "//p[2]/text()") %>% 
       html_text
     # pega links em pdf
     links <- html %>% 
-    read_html() %>% 
-    html_nodes(xpath = "//label/a") %>% 
-    html_attr("href")
+      read_html() %>% 
+      html_nodes(xpath = "//label/a") %>% 
+      html_attr("href")
     ## (repetindo) Encontros
     encontros2 <- rep(encontros, length(links))
     ## (repetindo) Gts
@@ -79,23 +87,62 @@ for (i in 1:21){
     #    
     df <- rbind(df, cbind(encontros2, nome_gt2, titulo, autores, links))}}
 
-
-df <- readRDS("./csv e RDS/compos.RDS")
 ### Renomeando as colunas 
 colnames(df)[1] <- "Edição"
 colnames(df)[2] <- "Nome do GT"
 colnames(df)[3] <- "Título"
 colnames(df)[4] <- "Autores"
 colnames(df)[5] <- "Links"
+
+
 ### Limpando um pouco a base de dados
 edicao <- df$Edição
 edicao <- noquote(edicao)
 edicao <- gsub("Seja bem-vindo\\(a) aos anais do ", "", edicao)
 edicao <- gsub(" - ISSN: 2236-4285", "", edicao)
 df$Edição <- edicao
+
+
+### Criando uma coluna com os anos SEM usar a web
+
+df$Ano <- df$Edição
+
+ano_vec <- df$Ano 
+ano_vec <- gsub("XXIX COMPÓS: UFMS/CAMPO GRANDE", "2020", ano_vec)
+ano_vec <- gsub("XXVIII COMPÓS: PUC/PORTO ALEGRE", "2019",ano_vec)
+ano_vec <- gsub("XXVII COMPÓS: BELO HORIZONTE/MG", "2018",ano_vec)
+ano_vec <- gsub("XXVI COMPÓS: SÃO PAULO/SP" , "2017",ano_vec)
+ano_vec <- gsub("XXV COMPÓS: GOIÂNIA/GO", "2016",ano_vec)
+ano_vec <- gsub("XXIV COMPOS: BRASÍLIA/DF" , "2015",ano_vec)
+ano_vec <- gsub("XXIII COMPOS: BELÉM/PA", "2014",ano_vec)
+ano_vec <- gsub("XXII COMPÓS: SALVADOR / BA", "2013",ano_vec)
+ano_vec <- gsub("XXI COMPÓS: JUIZ DE FORA / MG" , "2012",ano_vec)
+ano_vec <- gsub("XX COMPÓS: PORTO ALEGRE /RS", "2011",ano_vec)
+ano_vec <- gsub("XIX COMPÓS: RIO DE JANEIRO/RJ", "2010",ano_vec)
+ano_vec <- gsub("XVIII COMPÓS: BELO HORIZONTE/MG" , "2009",ano_vec)
+ano_vec <- gsub("XVII COMPÓS: SãO PAULO/SP" , "2008",ano_vec)
+ano_vec <- gsub("XVI COMPÓS: CURITIBA/PR" , "2007",ano_vec)
+ano_vec <- gsub("XV COMPÓS: BAURU/SP", "2006",ano_vec)
+ano_vec <- gsub("XIV COMPÓS: NITERóI/RJ", "2005",ano_vec)
+ano_vec <- gsub("XIII COMPÓS: SãO BERNARDO DO CAMPO/SP", "2004",ano_vec)
+ano_vec <- gsub("XII COMPÓS: RECIFE/PE", "2003",ano_vec)
+ano_vec <- gsub("XI COMPOS: RIO DE JANEIRO/RJ" , "2002",ano_vec)
+ano_vec <- gsub("X COMPOS: BRASíLIA/DF" , "2001",ano_vec)
+ano_vec <- gsub("IX COMPOS: PORTO ALEGRE/RS", "2000",ano_vec)
+df$Ano <- ano_vec
+
+### Re-arrumando a ordem das colunas
+
+df <- df %>% select(Ano, Edição, `Nome do GT`, `Título`, Autores, Links)
+
 ### Salvando a a base de dados coletada
 write.csv(df, "./csv e RDS/compos.csv")
 saveRDS(df, "./csv e RDS/compos.RDS")
+
+### Se precisar abrir o RDS novamente sem precisar rodar o código
+
+df <- readRDS("./csv e RDS/compos.RDS")
+
 ###########################################
 #######     Download em Massa   ###########
 ###########################################

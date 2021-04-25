@@ -59,20 +59,6 @@ Além disso, para ter um ambiente completo de desenvolvimento no R, recomendamos
 
 Após a instalação, vc pode executar o arquivo **compos.R** que está na pasta **R** direto do RStudio.
 
-Exemplo de como executar utilizando o terminal do Linux, após instalar o Python3.8:
-
-1. Acesse o diretório em que o arquivo .py está salvo:
-   ```sh
-   $ cd user/local
-   ```
-1. Instale as bibliotecas requeridas:
-   ```sh
-   $ pip3 install -r requirements.txt
-   ```
-1. Execute o arquivo usando Python3.8
-   ```sh
-   $ python3.8 script-anais-anpuh.py
-   ```
 
 
 #### Bibliotecas e módulos
@@ -97,4 +83,4 @@ O script está funcionando perfeitamente. Qualquer alteração no site percebida
 
 MIT licensed
 
-Copyright (C) 2020 [Eric Brasil](https://github.com/ericbrasiln), [Gabriel Andrade](https://github.com/gabrielsandrade), [Leonardo F. Nascimento](https://github.com/leofn/), [Vitor Mussa](https://github.com/vmussa), [LABHD-UFBA](http://labhd.ufba.br/
+Copyright (C) 2021 [Leonardo F. Nascimento](https://github.com/leofn/), [Tarssio Barreto](https://github.com/tarssioesa), [LABHD-UFBA](http://labhd.ufba.br/)
