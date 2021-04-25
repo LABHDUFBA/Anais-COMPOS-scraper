@@ -8,13 +8,25 @@ library(RSelenium)
 library(tidyverse)
 library(rvest)
 
-####### Criando um Webdriver Rselenium
-driver <- rsDriver(browser = c("chrome"), chromever="90.0.4430.24", port = 4447L)
+####### Criando um Webdriver(Chromedriver) para o Rselenium
+driver <- rsDriver(browser = c("chrome"),
+                   # Note bem: uma das maiores fontes de erro 
+                   # está na linha abaixo.
+                   # o Chromedriver deve estar no PATH e deve
+                   # ser a mesma versão instalada em sua máquina
+                   # veja isto (https://www.youtube.com/watch?v=dz59GsdvUF8) 
+                   #  sobre como instalar e configurar.
+                   # Lembre de reiniciar sua máquina depois de
+                   # configurar o PATH  
+                   chromever="90.0.4430.24",  
+                   port = 4447L)
+
 remote_driver <- driver[["client"]]
 
 #### Caso dê erro de porta já em uso execute a linha abaixo
 #### ( retirando o "#" da linha)
-#system("taskkill /im java.exe /f", intern=FALSE, ignore.stdout=FALSE)
+
+# system("taskkill /im java.exe /f", intern=FALSE, ignore.stdout=FALSE)
 
 ## Acessando o site da Compos
 remote_driver$navigate("https://www.compos.org.br/anais_encontros.php")
@@ -84,7 +96,7 @@ for (i in 1:21){
     encontros2 <- rep(encontros, length(links))
     ## (repetindo) Gts
     nome_gt2 <- rep(nome_gt, length(links))
-    #    
+    ## colando tudo em um data.frame vazio de nome "df" 
     df <- rbind(df, cbind(encontros2, nome_gt2, titulo, autores, links))}}
 
 ### Renomeando as colunas 
@@ -105,35 +117,35 @@ df$Edição <- edicao
 
 ### Criando uma coluna com os anos SEM usar a web
 
+## Criando uma coluna com mesmo conteúdo das Edições
 df$Ano <- df$Edição
 
-ano_vec <- df$Ano 
-ano_vec <- gsub("XXIX COMPÓS: UFMS/CAMPO GRANDE", "2020", ano_vec)
-ano_vec <- gsub("XXVIII COMPÓS: PUC/PORTO ALEGRE", "2019",ano_vec)
-ano_vec <- gsub("XXVII COMPÓS: BELO HORIZONTE/MG", "2018",ano_vec)
-ano_vec <- gsub("XXVI COMPÓS: SÃO PAULO/SP" , "2017",ano_vec)
-ano_vec <- gsub("XXV COMPÓS: GOIÂNIA/GO", "2016",ano_vec)
-ano_vec <- gsub("XXIV COMPOS: BRASÍLIA/DF" , "2015",ano_vec)
-ano_vec <- gsub("XXIII COMPOS: BELÉM/PA", "2014",ano_vec)
-ano_vec <- gsub("XXII COMPÓS: SALVADOR / BA", "2013",ano_vec)
-ano_vec <- gsub("XXI COMPÓS: JUIZ DE FORA / MG" , "2012",ano_vec)
-ano_vec <- gsub("XX COMPÓS: PORTO ALEGRE /RS", "2011",ano_vec)
-ano_vec <- gsub("XIX COMPÓS: RIO DE JANEIRO/RJ", "2010",ano_vec)
-ano_vec <- gsub("XVIII COMPÓS: BELO HORIZONTE/MG" , "2009",ano_vec)
-ano_vec <- gsub("XVII COMPÓS: SãO PAULO/SP" , "2008",ano_vec)
-ano_vec <- gsub("XVI COMPÓS: CURITIBA/PR" , "2007",ano_vec)
-ano_vec <- gsub("XV COMPÓS: BAURU/SP", "2006",ano_vec)
-ano_vec <- gsub("XIV COMPÓS: NITERóI/RJ", "2005",ano_vec)
-ano_vec <- gsub("XIII COMPÓS: SãO BERNARDO DO CAMPO/SP", "2004",ano_vec)
-ano_vec <- gsub("XII COMPÓS: RECIFE/PE", "2003",ano_vec)
-ano_vec <- gsub("XI COMPOS: RIO DE JANEIRO/RJ" , "2002",ano_vec)
-ano_vec <- gsub("X COMPOS: BRASíLIA/DF" , "2001",ano_vec)
-ano_vec <- gsub("IX COMPOS: PORTO ALEGRE/RS", "2000",ano_vec)
+## Substituindo as edições pelo ano correspondente  
+  ano_vec <- df$Ano 
+  ano_vec <- gsub("XXIX COMPÓS: UFMS/CAMPO GRANDE", "2020", ano_vec)
+  ano_vec <- gsub("XXVIII COMPÓS: PUC/PORTO ALEGRE", "2019",ano_vec)
+  ano_vec <- gsub("XXVII COMPÓS: BELO HORIZONTE/MG", "2018",ano_vec)
+  ano_vec <- gsub("XXVI COMPÓS: SÃO PAULO/SP" , "2017",ano_vec)
+  ano_vec <- gsub("XXV COMPÓS: GOIÂNIA/GO", "2016",ano_vec)
+  ano_vec <- gsub("XXIV COMPOS: BRASÍLIA/DF" , "2015",ano_vec)
+  ano_vec <- gsub("XXIII COMPOS: BELÉM/PA", "2014",ano_vec)
+  ano_vec <- gsub("XXII COMPÓS: SALVADOR / BA", "2013",ano_vec)
+  ano_vec <- gsub("XXI COMPÓS: JUIZ DE FORA / MG" , "2012",ano_vec)
+  ano_vec <- gsub("XX COMPÓS: PORTO ALEGRE /RS", "2011",ano_vec)
+  ano_vec <- gsub("XIX COMPÓS: RIO DE JANEIRO/RJ", "2010",ano_vec)
+  ano_vec <- gsub("XVIII COMPÓS: BELO HORIZONTE/MG" , "2009",ano_vec)
+  ano_vec <- gsub("XVII COMPÓS: SãO PAULO/SP" , "2008",ano_vec)
+  ano_vec <- gsub("XVI COMPÓS: CURITIBA/PR" , "2007",ano_vec)
+  ano_vec <- gsub("XV COMPÓS: BAURU/SP", "2006",ano_vec)
+  ano_vec <- gsub("XIV COMPÓS: NITERóI/RJ", "2005",ano_vec)
+  ano_vec <- gsub("XIII COMPÓS: SãO BERNARDO DO CAMPO/SP", "2004",ano_vec)
+  ano_vec <- gsub("XII COMPÓS: RECIFE/PE", "2003",ano_vec)
+  ano_vec <- gsub("XI COMPOS: RIO DE JANEIRO/RJ" , "2002",ano_vec)
+  ano_vec <- gsub("X COMPOS: BRASíLIA/DF" , "2001",ano_vec)
+  ano_vec <- gsub("IX COMPOS: PORTO ALEGRE/RS", "2000",ano_vec)
+
+## Salvando na coluna Ano o resultado das substituições
 df$Ano <- ano_vec
-
-### Re-arrumando a ordem das colunas
-
-df <- df %>% select(Ano, Edição, `Nome do GT`, `Título`, Autores, Links)
 
 ### Salvando a a base de dados coletada
 write.csv(df, "./csv e RDS/compos.csv")
