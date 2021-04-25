@@ -32,13 +32,14 @@ ___
   - [Instalação](#instalação)
     - [R e RStudio](#ReRSTUDIO)
       - [Libraries](#bibliotecas)
+   - [Crohme Driver](#crohmedriver)
   - [Resultados](#resultados)
   - [Licença](#licença)
 
 
 ## Instalação
 
-Para executar o Script Anais-Anpuh, vc precisa acessar a pasta da ferramenta no [GitHub](https://github.com/LABHDUFBA/Anais-ComPos). Clone ou faça download do repositório e salve na pasta que deseja que os resultados e seus respectivos arquivos sejam armazenados. Antes de executar o script, é preciso preparar seu computador, como mostramos abaixo.
+Para executar o Script Anais-Anpuh, você precisa acessar a pasta da ferramenta no [GitHub](https://github.com/LABHDUFBA/Anais-ComPos). Clone ou faça download do repositório e salve na pasta que deseja que os resultados e seus respectivos arquivos sejam armazenados. Antes de executar o script, é preciso preparar seu computador, como mostramos abaixo.
 
 ### R e RStudio
 
@@ -76,15 +77,7 @@ Exemplo de como executar utilizando o terminal do Linux, após instalar o Python
 
 #### Bibliotecas e módulos
 
-- **urllib.requests**: módulo do Python que ajuda a acessar urls.
-[Saiba mais.](https://docs.python.org/pt-br/3/library/urllib.request.htmll)
-- **os**: módulo do Python que permite manipular funções do sistema operacional.
-[Saiba mais.](https://docs.python.org/pt-br/3/library/os.html)
-- **bs4**: [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) é uma biblioteca Python para extrair
- dados de arquivos HTML e XML.
-- **re**: [Regular Expressions](https://docs.python.org/pt-br/3/library/re.html) é um módulo do Python para operar com expressões regulares.
-- **pandas**: [Pandas](https://pandas.pydata.org/) é uma biblioteca escrita em Python para manipulação e análise de dados.
-- - **wget**: [Wget](https://pypi.org/project/wget/) é uma biblioteca escrita em Python para realizar downloads. 
+
 
 ## Resultados
 

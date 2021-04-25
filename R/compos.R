@@ -3,6 +3,7 @@
 ###                               LABHDUFBA                           ### 
 ###                Leonardo Nascimento e Tarssio Barreto              ###    
 #########################################################################
+## Pacotes necessários
 library(RSelenium)
 library(tidyverse)
 library(rvest)
@@ -22,13 +23,14 @@ encontros <- html %>%
   read_html() %>% 
   html_nodes(xpath = "//label/a") %>% 
   html_text()
-### Colando link básico do site compos nos links dos encontros
+### Colando o endereço básico do site ("https://www.compos.org.br/") 
+### da COMPÓS nos links dos encontros
 links_enc <- paste0("https://www.compos.org.br/", links_enc, "")
 ### Criandos links para os GTs
 links_gts <- gsub("menu_anais.php", "anais_texto_por_gt.php", links_enc)
 ### Criando um data-frame vazio para os links
 df <- data.frame()
-### Função de para clicar nos elementos
+### Função de para clicar nos GTs
 clica <- function(element){element$clickElement();  Sys.sleep(2);}
 ################################################################################
 #### Loop para entrar nos GTs dos diferentes encontros, clicar nos diferentes ##
@@ -40,7 +42,7 @@ for (i in 1:21){
   Sys.sleep(1)
   remote_driver$navigate(url)
   html1 <- remote_driver$getPageSource()[[1]]
-  ### encontros
+  ### pega o nome dos encontros
   encontros <- html1 %>% 
     read_html() %>% 
     html_nodes(xpath = "//*[@id='divResultado1']/div/h2/text()") %>% 
@@ -77,28 +79,54 @@ for (i in 1:21){
     #    
     df <- rbind(df, cbind(encontros2, nome_gt2, titulo, autores, links))}}
 
-### Salvando a a base de dados
-write.csv(df, "compos.csv")
-saveRDS(df, "compos.RDS")
-### Download em Massa
+
+df <- readRDS("./csv e RDS/compos.RDS")
+### Renomeando as colunas 
+colnames(df)[1] <- "Edição"
+colnames(df)[2] <- "Nome do GT"
+colnames(df)[3] <- "Título"
+colnames(df)[4] <- "Autores"
+colnames(df)[5] <- "Links"
+### Limpando um pouco a base de dados
+edicao <- df$Edição
+edicao <- noquote(edicao)
+edicao <- gsub("Seja bem-vindo\\(a) aos anais do ", "", edicao)
+edicao <- gsub(" - ISSN: 2236-4285", "", edicao)
+df$Edição <- edicao
+### Salvando a a base de dados coletada
+write.csv(df, "./csv e RDS/compos.csv")
+saveRDS(df, "./csv e RDS/compos.RDS")
+###########################################
+#######     Download em Massa   ###########
+###########################################
+# Gerando links para download
 links <- df$links
 
+# Escolhando a pasta de destinio dos arquivos
+setwd("./PDFs/")
+
+# Loop para download em massa de todos os links 
 for (url in links) {
   newName <- paste(format(Sys.time(), "%Y%m%d%H%M%S"), "-", basename(url), sep =" ")
   download.file(url, destfile = newName, mode="wb")
 }
+######################################
+## Renomeando os arquivos em massa ###
+#####################################
 
-df <- readRDS("compos.RDS")
+# Desabilite o comentário caso não queira ter que baixar tudo novamente 
+## df <- readRDS("./csv e RDS/compos.RDS")
+
+## Eliminando símbolos que o windows não aceita
 titulo <- df$titulo
 titulo <- gsub("\\:|\\?|\\/|*|ñ|\\(|\\)|\"|'", "", titulo)
 
-
 ### Renomenando em massa
-oldNames<-list.files(".") #some argument here
+oldNames<-list.files(".") #
 newNames <- titulo
 for (i in 1:length(oldNames))file.rename(oldNames[i],newNames[i])
 
-oldNames<-list.files(".") #some argument here
+oldNames<-list.files(".") #
 newNames<-paste(sep="",oldNames,".pdf")
 for (i in 1:length(oldNames)) file.rename(oldNames[i],newNames[i])
 
