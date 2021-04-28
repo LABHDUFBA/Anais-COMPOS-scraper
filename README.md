@@ -30,8 +30,8 @@ ___
     - [R e RStudio](#ReRSTUDIO)
     - [Libraries](#biblioteca_e_módulos)
     - [Crohme Driver](#crohmedriver)
-  - [Resultados](#resultados)
-  - [Licença](#licença)
+ - [Resultados](#resultados)
+ - [Licença](#licença)
 
 
 ## Instalação
