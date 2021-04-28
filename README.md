@@ -86,4 +86,4 @@ O script está funcionando perfeitamente. Qualquer alteração no site percebida
 
 MIT licensed
 
-Copyright (C) 2021 [Leonardo F. Nascimento](https://github.com/leofn/), [Tarssio Barreto](https://github.com/tarssioesa), [LABHD-UFBA](http://labhd.ufba.br/)
+Copyright (C) 2021 [Leonardo F. Nascimento](https://github.com/leofn/), [Tarssio Barreto](https://github.com/tarssioesa), [LABHDUFBA](http://labhd.ufba.br/)
