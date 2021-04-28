@@ -74,7 +74,7 @@ Vocêr vai precisar instalar as seguintes bibliotecas:
 
 ## Resultados
 
-O script retorna para o usuário **todos os pdfs disponíveis em todas as páginas de todos os anais da COMPÓS DE 2000 até 2020**. Os arquivos foram nomeados com o ano e o título do trabalho, então posteriormente foram criadas pastas com o nome do evento/ano e alocamos os pdfs em cada uma delas. 
+O script retorna para o usuário **todos os pdfs disponíveis em todas as páginas de todos os anais da COMPÓS DE 2000 até 2020**. Os arquivos foram nomeados com o ano e o título do trabalho, então posteriormente podem ser criadas pastas com o nome do evento/ano e alocadas os pdfs em cada uma delas. 
 
 
 O script também gera um arquivo **CSV** (*comma-separated values*) contendo as seguintes informações para cada paper: Ano, Edição, Nome do GT, Título, Autores, e Link do Arquivo. Esse arquivo pode ser aberto como uma planilha e trabalhado em banco de dados.
