@@ -1,6 +1,6 @@
 [![made-with-R](https://img.shields.io/badge/Make%20with-R-blue)](https://www.r-project.org/) [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
-# Script Anais-COMPÓS
+# Script Anais-COMPOS-Scraper
 
 *Projeto de script para web scraping da página de [Anais da Associação Nacional dos Programas de Pós-Graduação em Comunicação - COMPÓS](https://www.compos.org.br/anais.php) desenvolvido pelo [Laboratório de Humanidades Digitais da UFBA](http://labhd.ufba.br/).*
 
@@ -26,19 +26,17 @@ ___
 
 ## Índice
 
-- [Script Anais-COMPÓS](#script-anais-compos)
-  - [Índice](#índice)
-  - [Instalação](#instalação)
+- [Instalação](#instalação)
     - [R e RStudio](#ReRSTUDIO)
-      - [Libraries](#bibliotecas)
-   - [Crohme Driver](#crohmedriver)
+    - [Libraries](#biblioteca_e_módulos)
+    - [Crohme Driver](#crohmedriver)
   - [Resultados](#resultados)
   - [Licença](#licença)
 
 
 ## Instalação
 
-Para executar o Script Anais-Anpuh, você precisa acessar a pasta da ferramenta no [GitHub](https://github.com/LABHDUFBA/Anais-ComPos). Clone ou faça download do repositório e salve na pasta que deseja que os resultados e seus respectivos arquivos sejam armazenados. Antes de executar o script, é preciso preparar seu computador, como mostramos abaixo.
+Para executar o Script Anais-Anpuh, você precisa acessar a pasta da ferramenta no [GitHub](https://github.com/LABHDUFBA/Anais-COMPOS-scraper). Clone ou faça download do repositório e salve na pasta que deseja que os resultados e seus respectivos arquivos sejam armazenados. Antes de executar o script, é preciso preparar seu computador, como mostramos abaixo.
 
 ### R e RStudio
 
@@ -59,22 +57,28 @@ Além disso, para ter um ambiente completo de desenvolvimento no R, recomendamos
 Após a instalação, vc pode executar o arquivo **compos.R** que está na pasta **R** direto do RStudio.
 
 
+### Bibliotecas e módulos
 
-#### Bibliotecas e módulos
+Vocêr vai precisar instalar as seguintes bibliotecas: 
 
+1. [RSelenium](https://cran.r-project.org/web/packages/RSelenium/RSelenium.pdf)
+2. [tidyverse](https://www.tidyverse.org/)
+3. [rvest](https://cran.r-project.org/web/packages/rvest/rvest.pdf)
+
+### Chromedriver
+
+1. [Instruções sobre como instalar o Chromedriver no Windows 10 :](https://www.youtube.com/watch?v=dz59GsdvUF8) 
+
+2. [Instruções sobre como instalar o Chromedriver no Ubuntu :](https://medium.com/@marco.conviccao/configurando-o-chromedriver-no-ubuntu-7baaf2be7c68)
 
 
 ## Resultados
 
-O script retorna para o usuário **todos os pdfs disponíveis em todas as páginas de todos os Simpósios Nacionais da Anpuh desde 1963 até 2017**. São criadas pastas com o número de cada evento para o armazenamento dos arquivos em PDF.
+O script retorna para o usuário **todos os pdfs disponíveis em todas as páginas de todos os anais da COMPÓS DE 2000 até 2020**. Os arquivos foram nomeados com o ano e o título do trabalho, então posteriormente foram criadas pastas com o nome do evento/ano e alocamos os pdfs em cada uma delas. 
 
-<p align="center"><img src="https://github.com/ericbrasiln/Anais-Anpuh/blob/master/images/pastas.png"/></p>
 
-É importante notar que muitos papers não estão com pdf disponível no site, assim como nas edições mais antigas encontramos arquivos que contém vários papers num único PDF.
+O script também gera um arquivo **CSV** (*comma-separated values*) contendo as seguintes informações para cada paper: Ano, Edição, Nome do GT, Título, Autores, e Link do Arquivo. Esse arquivo pode ser aberto como uma planilha e trabalhado em banco de dados.
 
-O script também gera um arquivo **CSV** (*comma-separated values*) contendo os seguintes valores para cada paper: Autor(es)/Instituições,Título, Tipo, Evento, Ano, Link do Arquivo. Esse arquivo pode ser aberto como uma planilha e trabalhado em banco de dados.
-
-![exemplo de csv](images/exemplo-csv.png)
 
 O script está funcionando perfeitamente. Qualquer alteração no site percebida pelos usuários ou sugestões de aprimoramento são bem vindas.
 

@@ -1,8 +1,10 @@
-#########################################################################
-###  Projeto de script para web scraping da pagina de Anais da COMPÓS ###
-###                               LABHDUFBA                           ### 
-###                Leonardo Nascimento e Tarssio Barreto              ###    
-#########################################################################
+##############################################################################
+###  Projeto de script para web scraping da página de [Anais da Associação  ##
+###  Nacional dos Programas de Pós-Graduação em Comunicação - COMPÓS]       ##
+###  desenvolvido pelo Laboratório de Humanidades Digitais da UFBA]         ## 
+###                      (http://labhd.ufba.br/)                           ###    
+##############################################################################
+
 ## Pacotes necessários
 library(RSelenium)
 library(tidyverse)
@@ -115,7 +117,7 @@ edicao <- gsub(" - ISSN: 2236-4285", "", edicao)
 df$Edição <- edicao
 
 
-### Criando uma coluna com os anos SEM usar a web
+### Criando uma coluna com os anos **SEM WEBSCRAPING**
 
 ## Criando uma coluna com mesmo conteúdo das Edições
 df$Ano <- df$Edição
@@ -159,36 +161,42 @@ df <- readRDS("./csv e RDS/compos.RDS")
 #######     Download em Massa   ###########
 ###########################################
 # Gerando links para download
-links <- df$links
+links <- df$Links
 
 # Escolhando a pasta de destinio dos arquivos
 setwd("./PDFs/")
 
 # Loop para download em massa de todos os links 
-for (url in links) {
+for (url in links){
   newName <- paste(format(Sys.time(), "%Y%m%d%H%M%S"), "-", basename(url), sep =" ")
-  download.file(url, destfile = newName, mode="wb")
-}
+  download.file(url, 
+                destfile = newName,
+                quiet = T,
+                mode="wb")}
+
 ######################################
 ## Renomeando os arquivos em massa ###
 #####################################
 
 # Desabilite o comentário caso não queira ter que baixar tudo novamente 
-## df <- readRDS("./csv e RDS/compos.RDS")
+#df <- readRDS("./csv e RDS/compos.RDS")
 
-## Eliminando símbolos que o windows não aceita
-titulo <- df$titulo
-titulo <- gsub("\\:|\\?|\\/|*|ñ|\\(|\\)|\"|'", "", titulo)
+## Eliminando símbolos que o windows não aceita no nome do arquivo
+## OBS: precisa ser melhorado para eliminar sobrescritpos
+titulo <- df$'Título'
+titulo <- gsub("\\:|\\?|\\/|*|ñ|\\(|\\)|\"|\n|[\u006E\u00B0\u00B2\u00B3\u00B9\u02AF\u0670\u0711\u2121\u213B\u2207\u29B5\uFC5B-\uFC5D\uFC63\uFC90\uFCD9\u2070\u2071\u2074-\u208E\u2090-\u209C\u0345\u0656\u17D2\u1D62-\u1D6A\u2A27\u2C7C]+/g
+", "", titulo)
+
+## Criando nomes os pdfs (ano - título.pdf)
+ano <- df$Ano
+nome_final <- paste0(ano, " - ", titulo)
 
 ### Renomenando em massa
+# Novos nomes
 oldNames<-list.files(".") #
-newNames <- titulo
+newNames <- nome_final
 for (i in 1:length(oldNames))file.rename(oldNames[i],newNames[i])
-
+# Inserindo a extensão .pdf em todos
 oldNames<-list.files(".") #
 newNames<-paste(sep="",oldNames,".pdf")
 for (i in 1:length(oldNames)) file.rename(oldNames[i],newNames[i])
-
-
-
-
